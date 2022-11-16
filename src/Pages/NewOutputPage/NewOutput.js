@@ -1,9 +1,9 @@
 import styled from "styled-components"
 
-export default function NewInput() {
+export default function NewOutput() {
     return (
         <Container>
-            NewInput
+            NewOutput
         </Container>
     )
     
@@ -16,4 +16,6 @@ const Container = styled.div`
     justify-content: center;
     height: 100vh;
     width: 100%;
+    background-color: #8C11BE;
+
 `
