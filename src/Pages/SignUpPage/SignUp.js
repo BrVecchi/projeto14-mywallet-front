@@ -6,10 +6,10 @@ export default function SignUp() {
         <Container>
           <Header>My Wallet</Header>
           <Form>
-            <Input placeholder="Nome" type="email" />
-            <Input placeholder="E-mail" type="email" />
-            <Input placeholder="Senha" type="email" />
-            <Input placeholder="Confirme a senha" type="password" />
+            <Input placeholder="Nome" type="email" required/>
+            <Input placeholder="E-mail" type="email" required/>
+            <Input placeholder="Senha" type="email" required/>
+            <Input placeholder="Confirme a senha" type="password" required/>
             <Button>Cadastrar</Button>
           </Form>
           <Link sans-serif color="white" to="/sign-in">

@@ -6,8 +6,8 @@ export default function SignIn() {
     <Container>
       <Header>My Wallet</Header>
       <Form>
-        <Input placeholder="E-mail" type="email" />
-        <Input placeholder="Senha" type="password" />
+        <Input placeholder="E-mail" type="email" required/>
+        <Input placeholder="Senha" type="password" required/>
         <Button>Entrar</Button>
       </Form>
       <Link sans-serif color="white" to="/sign-up">

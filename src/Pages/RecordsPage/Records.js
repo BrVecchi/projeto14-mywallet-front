@@ -4,12 +4,23 @@ import {
   ExitOutline,
   RemoveCircleOutline,
 } from "react-ionicons";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function Records() {
   const [myRecords, setMyRecords] = useState([]);
   const valor = 1000.0;
-  console.log(myRecords.length);
+
+  const navigate = useNavigate()
+
+
+  function goToNewInput() {
+    navigate("/new-input")
+  }
+
+  function goToNewOutput() {
+    navigate("/new-output")
+  }
 
   return (
     <Container>
@@ -28,11 +39,11 @@ export default function Records() {
         )}
       </RecordsContainer>
       <Buttons>
-        <NewInput>
+        <NewInput onClick={goToNewInput}>
           <AddCircleOutline color="white" />
           <span>Nova entrada</span>
         </NewInput>
-        <NewOutput>
+        <NewOutput onClick={goToNewOutput}>
           <RemoveCircleOutline color="white" />
           <span>Nova saída</span>
         </NewOutput>
