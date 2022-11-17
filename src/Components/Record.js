@@ -8,7 +8,6 @@ export default function Record({record}) {
     useEffect(() => {
         if (record.status === "output") {
             setValueColor("#C70000")
-            console.log("que será que será")
         }
       }, []);
 
