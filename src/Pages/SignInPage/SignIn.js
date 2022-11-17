@@ -6,16 +6,19 @@ import styled from "styled-components";
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [user, setUser] = useState([])
+  console.log(user)
 
   const navigate = useNavigate()
 
   function signIn(e) {
     e.preventDefault()
-    const request = axios.get("http://localhost:5000/sign-up", {
+    const request = axios.post("http://localhost:5000/sign-in", {
       email,
       password,
     });
-    request.then(() => {
+    request.then((res) => {
+      setUser(res.data)
       alert("Usuário logado!");
       navigate("/records")
       setEmail("");

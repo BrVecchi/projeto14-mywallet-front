@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AddCircleOutline,
   ExitOutline,
@@ -9,6 +9,8 @@ import styled from "styled-components";
 import Record from "../../Components/Record";
 
 export default function Records() {
+  const navigate = useNavigate();
+
   const [myRecords, setMyRecords] = useState([
     {
       date: "30/11",
@@ -25,7 +27,18 @@ export default function Records() {
   ]);
   const valor = 1000.0;
 
-  const navigate = useNavigate();
+  useEffect(getRecords, [])
+
+  function getRecords() {
+    const request = axios.get("http://localhost:5000/records")
+    request.then(res => {
+      setMyRecords(res.data)
+    })
+    request.catch(err => {
+      alert("Algo deu errado e a culpa é nossa. =/")
+      console.log(err)
+    })
+  }
 
   function goToNewInput() {
     navigate("/new-input");
@@ -109,6 +122,7 @@ const RecordsSquare = styled.div`
     color: #868686;
     padding: 0 20% 0 20%;
     text-align: center;
+    margin-top: 60%;
   }
 `;
 
