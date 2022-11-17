@@ -1,13 +1,51 @@
+import axios from "axios";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 export default function SignIn() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const navigate = useNavigate()
+
+  function signIn(e) {
+    e.preventDefault()
+    const request = axios.get("http://localhost:5000/sign-up", {
+      email,
+      password,
+    });
+    request.then(() => {
+      alert("Usuário logado!");
+      navigate("/records")
+      setEmail("");
+      setPassword("");
+    }).catch(()=>{
+      alert("Essas informações de login não batem, tente novamente.")
+      setEmail("");
+      setPassword("");
+    })
+  }  
   return (
     <Container>
       <Header>My Wallet</Header>
-      <Form>
-        <Input placeholder="E-mail" type="email" required/>
-        <Input placeholder="Senha" type="password" required/>
+      <Form onSubmit={signIn}>
+      <Input
+          name="email"
+          placeholder="E-mail"
+          type="email"
+          required
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
+        <Input
+          name="password"
+          placeholder="Senha"
+          type="password"
+          required
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
         <Button>Entrar</Button>
       </Form>
       <Link sans-serif color="white" to="/sign-up">
