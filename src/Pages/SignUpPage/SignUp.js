@@ -1,31 +1,40 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import MyContext from "../../components/MyContext";
 
 export default function SignUp() {
+  const {setToken} = useContext(MyContext)  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmation, setConfirmation] = useState("");
-  console.log(name);
-  console.log(password);
 
   function signUp(e) {
     e.preventDefault()
-    const request = axios.post("http://localhost:5000/sign-up", {
-      name,
-      email,
-      password,
-    });
-    request.then(() => {
+
+    if (confirmation !== password) {
+      alert("A confirmação da senha não confere!")
+      setPassword("");
+      setConfirmation("");
+      return
+    }
+
+    const requestObject = {name, email, password}
+
+    const request = axios.post("http://localhost:5000/sign-up", {requestObject});
+    request.then((res) => {
       alert("Usuário cadastrato com sucesso!");
       setConfirmation("");
       setEmail("");
       setName("");
       setPassword("");
-    }).catch(()=>{
+      setToken(res.data.token)
+    }).catch((err)=>{
       alert("Algo foi digitado incorretamente, tente novamente.")
+      console.log(err)
+      console.log(requestObject)
       setPassword("");
       setConfirmation("");
     })

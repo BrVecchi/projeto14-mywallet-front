@@ -6,34 +6,37 @@ import styled from "styled-components";
 export default function SignIn() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState([])
-  console.log(user)
+  const [user, setUser] = useState([]);
+  console.log(user);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   function signIn(e) {
-    e.preventDefault()
+    e.preventDefault();
     const request = axios.post("http://localhost:5000/sign-in", {
       email,
       password,
     });
-    request.then((res) => {
-      setUser(res.data)
-      alert("Usuário logado!");
-      navigate("/records")
-      setEmail("");
-      setPassword("");
-    }).catch(()=>{
-      alert("Essas informações de login não batem, tente novamente.")
-      setEmail("");
-      setPassword("");
-    })
-  }  
+    request
+      .then((res) => {
+        setUser(res.data);
+        alert("Usuário logado!");
+        navigate("/records");
+        setEmail("");
+        setPassword("");
+      })
+      .catch((err) => {
+        alert("Essas informações de login não batem, tente novamente.");
+        setEmail("");
+        setPassword("");
+        console.error(err);
+      });
+  }
   return (
     <Container>
       <Header>My Wallet</Header>
       <Form onSubmit={signIn}>
-      <Input
+        <Input
           name="email"
           placeholder="E-mail"
           type="email"
@@ -56,9 +59,9 @@ export default function SignIn() {
       </Link>
     </Container>
   );
-  }
-  
-  const Container = styled.div`
+}
+
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -73,25 +76,25 @@ export default function SignIn() {
     font-weight: 700;
     text-decoration: none;
   }
-  `;
-  
-  const Header = styled.div`
+`;
+
+const Header = styled.div`
   color: #ffffff;
   font-family: "Saira Stencil One", cursive;
   margin-bottom: 30px;
   font-size: 32px;
-  `;
-  
-  const Form = styled.form`
+`;
+
+const Form = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 100%;
   margin-bottom: 30px;
-  `;
-  
-  const Input = styled.input`
+`;
+
+const Input = styled.input`
   height: 58px;
   width: 85%;
   font-size: 20px;
@@ -100,9 +103,9 @@ export default function SignIn() {
   padding: 15px;
   border: none;
   border-radius: 5px;
-  `;
-  
-  const Button = styled.button`
+`;
+
+const Button = styled.button`
   background-color: #a328d6;
   height: 46px;
   width: 85%;
@@ -111,4 +114,4 @@ export default function SignIn() {
   font-size: 20px;
   border: none;
   border-radius: 5px;
-  `;
+`;

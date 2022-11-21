@@ -6,9 +6,12 @@ import NewOutput from "./Pages/NewOutputPage/NewOutput";
 import Records from "./Pages/RecordsPage/Records";
 import SignIn from "./Pages/SignInPage/SignIn";
 import SignUp from "./Pages/SignUpPage/SignUp";
-
+import MyContext from "./Components/MyContext"
 function App() {
+  const [token, setToken] = useState("");
+  
   return (
+    <MyContext.Provider value={{token, setToken}}>
     <BrowserRouter>
     <ResetCSS />
     <GlobalStyle />
@@ -20,6 +23,7 @@ function App() {
       <Route path="/new-output" element={<NewOutput />} />
     </Routes>
     </BrowserRouter>
+    </MyContext.Provider>
   );
 }
 
