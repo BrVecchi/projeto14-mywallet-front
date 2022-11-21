@@ -15,8 +15,8 @@ export default function Records() {
   const navigate = useNavigate();
 
   const [myRecords, setMyRecords] = useState([]);
-  const [balance, setBalance] = useState(0)
-  const [balanceColor, setBalanceColor] = useState("blue")
+  const [balance, setBalance] = useState(0);
+  const [balanceColor, setBalanceColor] = useState("blue");
 
   useEffect(getRecords, []);
 
@@ -25,21 +25,27 @@ export default function Records() {
     const request = axios.get("http://localhost:5000/records", config);
     request.then((res) => {
       setMyRecords(res.data);
+      calculatingBalance(res.data)
     });
     request.catch((err) => {
       alert("Algo deu errado e a culpa é nossa. =/");
       console.log(err);
     });
-  calculatingBalance()
   }
 
-  function calculatingBalance() {
-    let newBalance = 0
-    myRecords.forEach((record) => record.status === "input" ? newBalance = newBalance + Number(record.value) : newBalance = newBalance - Number(record.value))
-    newBalance >= 0 ? setBalanceColor("green") : setBalanceColor("red")
-    setBalance(newBalance.toFixed(2))
-  }
+  function calculatingBalance(myRecords) {
+    console.log("Estou sendo chamado")
+    console.log(myRecords)
 
+    let newBalance = 0;
+    myRecords.forEach((record) =>
+      record.status === "input"
+        ? (newBalance = newBalance + Number(record.value))
+        : (newBalance = newBalance - Number(record.value))
+    );
+    newBalance >= 0 ? setBalanceColor("green") : setBalanceColor("red");
+    setBalance(newBalance.toFixed(2));
+  }
 
   function goToNewInput() {
     navigate("/new-input");
@@ -145,8 +151,8 @@ const Saldo = styled.div`
 `;
 
 const Balance = styled.div`
-    color: ${(props) => props.color};
-`
+  color: ${(props) => props.color};
+`;
 
 const Buttons = styled.div`
   display: flex;

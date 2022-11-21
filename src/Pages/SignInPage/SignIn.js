@@ -20,6 +20,7 @@ export default function SignIn() {
     });
     request
       .then((res) => {
+        console.log(res.data)
         setToken(res.data.token);
         alert("Usuário logado!");
         navigate("/records");
