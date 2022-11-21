@@ -19,7 +19,7 @@ export default function NewInput() {
     },
   };
   function addInput(e) {
-    e.preventDafault();
+    e.preventDefault();
     const request = axios.post(
       "http://localhost:5000/new-input",
       {
@@ -37,6 +37,7 @@ export default function NewInput() {
     });
     request.catch((err) => {
       alert("Algo inesperado aconteceu. Desculpe pelo transtorno. =/");
+      console.log(err)
     });
   }
 

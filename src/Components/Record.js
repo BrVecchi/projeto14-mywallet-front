@@ -4,6 +4,8 @@ import styled from "styled-components"
 
 export default function Record({record}) {
     const [valueColor, setValueColor] = useState("#03AC00")
+    const value = Number(record.value);
+
 
     useEffect(() => {
         if (record.status === "output") {
@@ -18,7 +20,7 @@ export default function Record({record}) {
             <Date>{record.date}</Date>
             <Description>{record.description}</Description>
             </DateAndDescription>
-            <Value valueColor={valueColor}>{record.value}</Value>
+            <Value valueColor={valueColor}>{value.toFixed(2)}</Value>
             </RecordContainer>
             <CloseCircleOutline color="#C6C6C6" />
         </Container>

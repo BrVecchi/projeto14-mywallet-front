@@ -11,16 +11,17 @@ import MyContext from "../../Components/MyContext";
 import Record from "../../Components/Record";
 
 export default function Records() {
-  const { token } = useContext(MyContext);
+  const { token, user } = useContext(MyContext);
   const navigate = useNavigate();
 
   const [myRecords, setMyRecords] = useState([]);
-  const valor = 1000.0;
+  const [balance, setBalance] = useState(0)
+  const [balanceColor, setBalanceColor] = useState("blue")
 
   useEffect(getRecords, []);
 
   function getRecords() {
-    const config = { headers: { Authorization: `bearer ${token}` } };
+    const config = { headers: { Authorization: `Bearer ${token}` } };
     const request = axios.get("http://localhost:5000/records", config);
     request.then((res) => {
       setMyRecords(res.data);
@@ -29,7 +30,16 @@ export default function Records() {
       alert("Algo deu errado e a culpa é nossa. =/");
       console.log(err);
     });
+  calculatingBalance()
   }
+
+  function calculatingBalance() {
+    let newBalance = 0
+    myRecords.forEach((record) => record.status === "input" ? newBalance = newBalance + Number(record.value) : newBalance = newBalance - Number(record.value))
+    newBalance >= 0 ? setBalanceColor("green") : setBalanceColor("red")
+    setBalance(newBalance.toFixed(2))
+  }
+
 
   function goToNewInput() {
     navigate("/new-input");
@@ -42,7 +52,7 @@ export default function Records() {
   return (
     <Container>
       <Header>
-        <span>Olá, Fulano</span>
+        <span>Olá, {user}</span>
         <ExitOutline color="white" />
       </Header>
       <RecordsSquare type="text">
@@ -57,7 +67,7 @@ export default function Records() {
             </RecordsContainer>
             <Saldo>
               <span>Saldo</span>
-              <span>{valor}</span>
+              <Balance color={balanceColor}>{balance}</Balance>
             </Saldo>
           </>
         )}
@@ -127,7 +137,16 @@ const RecordsContainer = styled.div`
 const Saldo = styled.div`
   display: flex;
   justify-content: space-between;
+  span {
+    font-family: "Raleway", sans-serif;
+    font-size: 20px;
+    color: black;
+  }
 `;
+
+const Balance = styled.div`
+    color: ${(props) => props.color};
+`
 
 const Buttons = styled.div`
   display: flex;

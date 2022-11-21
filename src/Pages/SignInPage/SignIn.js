@@ -1,13 +1,14 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import MyContext from "../../Components/MyContext";
 
 export default function SignIn() {
+  const { setToken, setUser } = useContext(MyContext);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [user, setUser] = useState([]);
-  console.log(user);
 
   const navigate = useNavigate();
 
@@ -19,11 +20,12 @@ export default function SignIn() {
     });
     request
       .then((res) => {
-        setUser(res.data);
+        setToken(res.data.token);
         alert("Usuário logado!");
         navigate("/records");
         setEmail("");
         setPassword("");
+        setUser(res.data.name)
       })
       .catch((err) => {
         alert("Essas informações de login não batem, tente novamente.");

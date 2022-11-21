@@ -14,20 +14,20 @@ export default function NewOutput() {
   const navigate = useNavigate();
 
   const dayjs = require("dayjs");
-  const data = dayjs().format("DD/MM");
+  const date = dayjs().format("DD/MM");
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
   function addOutput(e) {
-    e.preventDafault();
+    e.preventDefault();
     const request = axios.post(
       "http://localhost:5000/new-output",
       {
-        date: { data },
-        description: { description },
-        value: { value },
+        date,
+        description,
+        value,
         status: "output",
       },
       config
@@ -39,6 +39,7 @@ export default function NewOutput() {
     });
     request.catch((err) => {
       alert("Algo inesperado aconteceu. Desculpe pelo transtorno. =/");
+      console.log(err)
     });
   }
 

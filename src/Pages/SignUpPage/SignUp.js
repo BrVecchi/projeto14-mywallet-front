@@ -1,15 +1,15 @@
 import axios from "axios";
-import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import {  useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import MyContext from "../../Components/MyContext";
 
 export default function SignUp() {
-  const {setToken} = useContext(MyContext)  
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmation, setConfirmation] = useState("");
+
+  const navigate = useNavigate()
 
   function signUp(e) {
     e.preventDefault()
@@ -28,7 +28,7 @@ export default function SignUp() {
       setEmail("");
       setName("");
       setPassword("");
-      setToken(res.data.token)
+      navigate("/sign-in")
     }).catch((err)=>{
       alert("Algo foi digitado incorretamente, tente novamente.")
       console.log(err)
