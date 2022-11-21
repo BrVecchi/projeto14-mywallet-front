@@ -7,6 +7,8 @@ import Records from "./Pages/RecordsPage/Records";
 import SignIn from "./Pages/SignInPage/SignIn";
 import SignUp from "./Pages/SignUpPage/SignUp";
 import MyContext from "./Components/MyContext"
+import { useState } from "react";
+
 function App() {
   const [token, setToken] = useState("");
   

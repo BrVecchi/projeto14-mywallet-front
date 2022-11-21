@@ -2,7 +2,7 @@ import axios from "axios";
 import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import MyContext from "../../components/MyContext";
+import MyContext from "../../Components/MyContext";
 
 export default function SignUp() {
   const {setToken} = useContext(MyContext)  
@@ -21,9 +21,7 @@ export default function SignUp() {
       return
     }
 
-    const requestObject = {name, email, password}
-
-    const request = axios.post("http://localhost:5000/sign-up", {requestObject});
+    const request = axios.post("http://localhost:5000/sign-up", {name, email, password});
     request.then((res) => {
       alert("Usuário cadastrato com sucesso!");
       setConfirmation("");
@@ -34,7 +32,6 @@ export default function SignUp() {
     }).catch((err)=>{
       alert("Algo foi digitado incorretamente, tente novamente.")
       console.log(err)
-      console.log(requestObject)
       setPassword("");
       setConfirmation("");
     })

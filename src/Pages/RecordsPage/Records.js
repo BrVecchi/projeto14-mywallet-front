@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   AddCircleOutline,
   ExitOutline,
@@ -7,38 +7,28 @@ import {
 } from "react-ionicons";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import MyContext from "../../Components/MyContext";
 import Record from "../../Components/Record";
 
 export default function Records() {
+  const { token } = useContext(MyContext);
   const navigate = useNavigate();
 
-  const [myRecords, setMyRecords] = useState([
-    {
-      date: "30/11",
-      description: "Almoço mãe",
-      value: 39.9,
-      status: "output",
-    },
-    {
-      date: "13/03",
-      description: "Presente aniversário",
-      value: 289.50,
-      status: "input",
-    },
-  ]);
+  const [myRecords, setMyRecords] = useState([]);
   const valor = 1000.0;
 
-  useEffect(getRecords, [])
+  useEffect(getRecords, []);
 
   function getRecords() {
-    const request = axios.get("http://localhost:5000/records")
-    request.then(res => {
-      setMyRecords(res.data)
-    })
-    request.catch(err => {
-      alert("Algo deu errado e a culpa é nossa. =/")
-      console.log(err)
-    })
+    const config = { headers: { Authorization: `bearer ${token}` } };
+    const request = axios.get("http://localhost:5000/records", config);
+    request.then((res) => {
+      setMyRecords(res.data);
+    });
+    request.catch((err) => {
+      alert("Algo deu errado e a culpa é nossa. =/");
+      console.log(err);
+    });
   }
 
   function goToNewInput() {
@@ -60,13 +50,15 @@ export default function Records() {
           <p>Não há registros de entrada ou saída</p>
         ) : (
           <>
-          <RecordsContainer>
-          {myRecords.map((record) => <Record record = {record}/>)}
-          </RecordsContainer>
-          <Saldo>
-            <span>Saldo</span>
-            <span>{valor}</span>
-          </Saldo>
+            <RecordsContainer>
+              {myRecords.map((record) => (
+                <Record record={record} />
+              ))}
+            </RecordsContainer>
+            <Saldo>
+              <span>Saldo</span>
+              <span>{valor}</span>
+            </Saldo>
           </>
         )}
       </RecordsSquare>
@@ -131,7 +123,7 @@ const RecordsContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-`
+`;
 const Saldo = styled.div`
   display: flex;
   justify-content: space-between;

@@ -1,25 +1,37 @@
 import axios from "axios";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import MyContext from "../../Components/MyContext";
+
 
 export default function NewOutput() {
+  const { token } = useContext(MyContext);
   const [value, setValue] = useState();
   const [description, setDescription] = useState();
+
 
   const navigate = useNavigate();
 
   const dayjs = require("dayjs");
   const data = dayjs().format("DD/MM");
-
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
   function addOutput(e) {
-    e.preventDafault()
-    const request = axios.post("http://localhost:5000/new-output", {
-      date: { data },
-      description: { description },
-      value: { value },
-      status: "output",
-    });
+    e.preventDafault();
+    const request = axios.post(
+      "http://localhost:5000/new-output",
+      {
+        date: { data },
+        description: { description },
+        value: { value },
+        status: "output",
+      },
+      config
+    );
     request.then((res) => {
       setDescription();
       setValue();
