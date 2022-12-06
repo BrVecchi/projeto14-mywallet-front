@@ -19,9 +19,9 @@ function App() {
     <ResetCSS />
     <GlobalStyle />
     <Routes>
-      <Route path="/sign-in" element={<SignIn />} />
+      <Route path="/" element={<SignIn />} />
       <Route path="/sign-up" element={<SignUp />} />
-      <Route path="/" element={<Records />} />
+      <Route path="/records" element={<Records />} />
       <Route path="/new-input" element={<NewInput />} />
       <Route path="/new-output" element={<NewOutput />} />
     </Routes>
