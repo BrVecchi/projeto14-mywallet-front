@@ -3,13 +3,13 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import MyContext from "../../Components/MyContext";
+import { BASE_URL } from "../../Components/url";
 
 
 export default function NewOutput() {
   const { token } = useContext(MyContext);
   const [value, setValue] = useState();
   const [description, setDescription] = useState();
-
 
   const navigate = useNavigate();
 
@@ -23,7 +23,7 @@ export default function NewOutput() {
   function addOutput(e) {
     e.preventDefault();
     const request = axios.post(
-      "http://localhost:5000/new-output",
+      `${BASE_URL}/new-output`,
       {
         date,
         description,

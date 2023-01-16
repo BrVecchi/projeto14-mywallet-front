@@ -2,6 +2,7 @@ import axios from "axios";
 import {  useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { BASE_URL } from "../../Components/url";
 
 export default function SignUp() {
   const [name, setName] = useState("");
@@ -21,7 +22,7 @@ export default function SignUp() {
       return
     }
 
-    const request = axios.post("http://localhost:5000/sign-up", {name, email, password});
+    const request = axios.post(`${BASE_URL}/sign-up`, {name, email, password});
     request.then((res) => {
       alert("Usuário cadastrato com sucesso!");
       setConfirmation("");
